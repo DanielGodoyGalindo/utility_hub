@@ -11,6 +11,7 @@ Developing useful and reusable tools while practicing scalable architecture, dat
     <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
     <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
     <img alt="Mongoose" src="https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logoColor=white"/> 
+    <img alt="Zod" src="https://img.shields.io/badge/Zod-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
 </p>
 
 ## 📁 Structure  
