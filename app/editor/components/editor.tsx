@@ -91,6 +91,18 @@ function MenuBar({ editor }: { editor: Editor | null }) {
         loadNote();
     }, []);
 
+    // Export the current editor content as an HTML file and trigger a download
+    const exportHTML = () => {
+        const html = editor.getHTML();
+        const blob = new Blob([html], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "note.html";
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
     return (
         <div className="control-group">
             <div className="button-group">
@@ -204,11 +216,11 @@ function MenuBar({ editor }: { editor: Editor | null }) {
                     onClick={handleClickSave}>
                     Save  changes
                 </button>
-                {/* TODO */}
-                <button className='bg-yellow-200 hover:cursor-pointer p-2 mt-2 border border-gray-300 rounded-lg'>
-                    Export note
+                <button
+                    className="bg-blue-500 hover:cursor-pointer p-2 mt-2 border text-white  border-gray-300 rounded-lg"
+                    onClick={exportHTML}>
+                    Export to HTML
                 </button>
-                {/*  */}
                 {successMessage && (
                     <div className="flex justify-center items-center mt-2">
                         <p className="text-green-600 p-2">{successMessage}</p>
