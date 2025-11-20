@@ -25,7 +25,8 @@ Each subfolder in the repository represents an independent app, organized with a
 - **todo-app** — A basic TODO App built with Node.js, Express, and MongoDB. Each user can create up to 5 entries.
 - **weather-app** — Displays weather information for a user-input city. Includes two versions: one using Gemini and another with a public API.
 - **news-app** — A news viewer that fetches articles from a public news API and displays them with a clean UI.
-- **notes-app** — A rich text Notes App built using Tiptap, allowing formatted notes with a modern editor.
+- **notes-app** — A rich text Notes App built using Tiptap, allowing formatted notes with a modern editor. Notes can be saved to MongoDB and exported as HTML.
+- **kanban-app** — A drag-and-drop Kanban Board built with dnd-kit, featuring task creation, movement between columns, and local state persistence.
 
 *(More apps coming soon with Next.js and React)*
 

@@ -18,6 +18,7 @@ const initialData: Column[] = [
 export default function KanbanBoard() {
     const [columns, setColumns] = useState<Column[]>(initialData);
 
+    // https://docs.dndkit.com/api-documentation/sensors 
     const sensors = useSensors(
         useSensor(PointerSensor, { activationConstraint: { distance: 3 } })
     );
@@ -100,6 +101,7 @@ export default function KanbanBoard() {
         });
     }
 
+    // https://docs.dndkit.com/api-documentation/context-provider
     return (
         <DndContext
             sensors={sensors}
