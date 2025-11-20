@@ -9,5 +9,6 @@ export const config = {
     "/weatherApi/:path*",
     "/news/:path*",
     "/editor/:path*",
+    "/kanban/:path*",
   ],
 };

@@ -1,19 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-    DndContext,
-    closestCenter,
-    PointerSensor,
-    useSensor,
-    useSensors,
-    useDroppable,
-} from "@dnd-kit/core";
-import {
-    SortableContext,
-    verticalListSortingStrategy,
-    useSortable,
-} from "@dnd-kit/sortable";
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, useDroppable, } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, useSortable, } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { v4 as uuidv4 } from "uuid";
 
@@ -57,6 +46,15 @@ export default function KanbanBoard() {
                     }
                     : col
             )
+        );
+    }
+
+    function deleteTask(taskId: string) {
+        setColumns((prev) =>
+            prev.map((col) => ({
+                ...col,
+                tasks: col.tasks.filter((t) => t.id !== taskId),
+            }))
         );
     }
 
@@ -114,6 +112,7 @@ export default function KanbanBoard() {
                         <ColumnContent
                             column={column}
                             createTask={createTask}
+                            deleteTask={deleteTask}
                         />
                     </DroppableColumn>
                 ))}
@@ -125,7 +124,7 @@ export default function KanbanBoard() {
 // -----------------------------------------------------
 // Droppable Column (allows dropping even when empty)
 // -----------------------------------------------------
-function DroppableColumn({ column, children }) {
+function DroppableColumn({ column, children }: { column: Column, children: any }) {
     const { setNodeRef } = useDroppable({
         id: column.id,
     });
@@ -153,17 +152,20 @@ function DroppableColumn({ column, children }) {
 function ColumnContent({
     column,
     createTask,
+    deleteTask,
 }: {
     column: Column;
     createTask: (columnId: string) => void;
+    deleteTask: (taskId: string) => void;
 }) {
     return (
         <>
             <div className="flex justify-between items-center mb-3">
                 <h2 className="font-semibold text-lg">{column.title}</h2>
+                {/* Create task button */}
                 <button
                     onClick={() => createTask(column.id)}
-                    className="text-white bg-blue-500 rounded px-2 py-1 text-sm"
+                    className="text-white bg-blue-500 rounded px-2 py-1 text-sm hover: cursor-pointer"
                 >
                     +
                 </button>
@@ -174,7 +176,7 @@ function ColumnContent({
                 strategy={verticalListSortingStrategy}
             >
                 {column.tasks.map((task) => (
-                    <SortableTask key={task.id} task={task} />
+                    <SortableTask key={task.id} task={task} deleteTask={deleteTask} />
                 ))}
             </SortableContext>
         </>
@@ -184,7 +186,7 @@ function ColumnContent({
 // -----------------------------------------------------
 // Sortable Task (draggable item)
 // -----------------------------------------------------
-function SortableTask({ task }: { task: Task }) {
+function SortableTask({ task, deleteTask }: { task: Task; deleteTask: (id: string) => void }) {
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id: task.id });
 
@@ -196,12 +198,22 @@ function SortableTask({ task }: { task: Task }) {
     return (
         <div
             ref={setNodeRef}
+            style={style}
             {...attributes}
             {...listeners}
-            style={style}
-            className="p-3 mb-2 bg-white rounded-lg shadow border hover:bg-gray-50 cursor-grab"
+            className="p-3 mb-2 bg-white rounded-lg shadow border flex justify-between items-center hover:bg-gray-50 cursor-grab"
         >
-            {task.text}
+            <span>{task.text}</span>
+            {/* Delete button */}
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    deleteTask(task.id);
+                }}
+                className="text-red-500 hover:text-red-700 font-bold px-2 cursor-pointer"
+            >
+                ✕
+            </button>
         </div>
     );
 }

@@ -214,7 +214,7 @@ function MenuBar({ editor }: { editor: Editor | null }) {
             <div className='flex gap-3'>
                 <button className='bg-green-200 hover:cursor-pointer p-2 mt-2 border border-gray-300 rounded-lg'
                     onClick={handleClickSave}>
-                    Save  changes
+                    Save changes to DB
                 </button>
                 <button
                     className="bg-blue-500 hover:cursor-pointer p-2 mt-2 border text-white  border-gray-300 rounded-lg"
@@ -252,6 +252,7 @@ export default function EditorWrapper() {
         <div>
             <BackButton />
             <AuthButton />
+            <h1 className="text-2xl mb-4 text-center font-bold">Text Editor</h1>
             <MenuBar editor={editor} />
             <EditorContent editor={editor} className="tiptap" />
         </div>
